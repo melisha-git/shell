@@ -1,11 +1,12 @@
 #pragma once
 
-#include "CommandLine.hpp"
+#include "../CommandLine.hpp"
 
 class ICommand {
 public:
-    explicit ICommand(CommandLine commandLine);
+    explicit ICommand(const CommandLine& commandLine);
 
+    virtual void parse() = 0;
     virtual void handle() = 0;
 
     virtual ~ICommand() = default;

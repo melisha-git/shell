@@ -2,11 +2,9 @@
 
 #include <iostream>
 
-EchoCommand::EchoCommand(CommandLine commandLine) : ICommand(commandLine) {}
+EchoCommand::EchoCommand(const CommandLine& commandLine) : ICommand(commandLine) {}
 
-void EchoCommand::handle() {
-    std::string outputLine;
-
+void EchoCommand::parse() {
     bool isNextLine = true;
     size_t i = 0;
 
@@ -16,21 +14,25 @@ void EchoCommand::handle() {
 
     for (; i < commandLine_.arguments.size(); ++i) {
         if (!commandLine_.arguments[i].empty()) {
-            outputLine += commandLine_.arguments[i] + " ";
+            outputLine_ += commandLine_.arguments[i] + " ";
         }
     }
 
     for (const auto& other : commandLine_.other) {
         if (!other.empty()) {
-            outputLine += other + " ";
+            outputLine_ += other + " ";
         }
     }
 
-    outputLine.resize(outputLine.size() - 1);
-
-    if (isNextLine) {
-        outputLine += "\n";
+    if (!outputLine_.empty()) {
+        outputLine_.resize(outputLine_.size() - 1);
     }
 
-    std::cout << outputLine;
+    if (isNextLine) {
+        outputLine_ += "\n";
+    }
+}
+
+void EchoCommand::handle() {
+    std::cout << outputLine_;
 }

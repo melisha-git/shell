@@ -7,6 +7,7 @@
 enum class CommandType : int {
     UNDEFINED = 0,
     ECHO,
+    LS,
     CD,
     PWD,
     EXPORT,

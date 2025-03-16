@@ -25,6 +25,8 @@ void CommandLine::init(const std::string& strCommand) {
         type = CommandType::ENV;
     } else if (words[0] == "exit") {
         type = CommandType::EXIT;
+    } else if (words[0] == "ls") {
+        type = CommandType::LS;
     } else {
         throw std::logic_error(words[0] + ": command not found");
     }

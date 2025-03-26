@@ -8,4 +8,6 @@ public:
 
     void parse() override final;
     void handle() override final;
+private:
+    std::string outputLine_;
 };

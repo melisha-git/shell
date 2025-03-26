@@ -10,6 +10,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <iostream>
 
 void Parser::init(const std::string& line) {
     commandLine_.reinit(line);
@@ -62,7 +63,7 @@ void Parser::replacingEnviroment(std::vector<std::string>& vc) {
         return std::find(value.begin(), value.end(), '$');
     };
 
-    auto isReplace = [](std::string::iterator pos, std::string& argument) {
+    auto isReplace = [](const std::string::iterator& pos, const std::string& argument) {
         return  pos != argument.end() && std::next(pos) != argument.end() &&
                 std::find(argument.begin(), argument.end(), '"') == argument.end() &&
                 std::find(argument.begin(), argument.end(), '\'') == argument.end();
@@ -70,9 +71,11 @@ void Parser::replacingEnviroment(std::vector<std::string>& vc) {
 
     for (auto& argument : vc) {
         for (auto pos = findEnviroment(argument); isReplace(pos, argument); pos = findEnviroment(argument)) {
-            std::string oldValue {std::next(pos), argument.end()};
-            std::string enviromentVariable = std::getenv(oldValue.c_str());
-            argument.replace(std::distance(pos, argument.begin()), std::distance(argument.end(), pos), enviromentVariable);
+            std::string oldValue(std::next(pos), argument.end());
+            char* enviromentVariable = std::getenv(oldValue.c_str());
+            auto dist1 = std::distance(argument.begin(), pos);
+            auto dist2 = std::distance(pos, argument.end());
+            argument.replace(dist1, dist2, enviromentVariable == nullptr ? "" : enviromentVariable);
         }
     }
 }

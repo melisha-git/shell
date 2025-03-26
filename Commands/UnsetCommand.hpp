@@ -8,4 +8,6 @@ public:
 
     void parse() override final;
     void handle() override final;
+private:
+    std::vector<std::string> unsetVariables_;
 };

@@ -51,5 +51,10 @@
         "ctime": "cpp",
         "ratio": "cpp",
         "iomanip": "cpp"
-    }
+    },
+    "cmake.configureOnOpen": true,
+    "cmake.configureSettings": {
+        "CMAKE_TOOLCHAIN_FILE": "${workspaceFolder}/vcpkg/scripts/buildsystems/vcpkg.cmake"
+    },
+    "cmake.generator": "Unix Makefiles" // или "Unix Makefiles", "Visual Studio 17 2022" и т. д.
 }
